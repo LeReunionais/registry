@@ -1,0 +1,18 @@
+registry:
+  build: .
+  ports:
+    - "3000:3000"
+    - "3001:3001"
+    - "3002:3002"
+    - "3003:3003"
+  restart: always
+test:
+  build: .
+  volumes:
+    - ./output:/registry/output
+  command: npm test
+coverage:
+  build: .
+  volumes:
+    - ./coverage:/registry/coverage
+  command: npm run coverage
