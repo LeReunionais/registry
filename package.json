@@ -7,7 +7,7 @@
     "start": "nodemon index.js",
     "test": "./node_modules/mocha/bin/mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./output/junit.xml",
     "coverage": "node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
-    "continuous": "./node_modules/mocha/bin/mocha test --watch"
+    "continuous": "./node_modules/mocha/bin/mocha test --watch --recursive"
   },
   "keywords": [
     "service",

@@ -46,8 +46,10 @@ function doFind(options) {
     requester.connect('tcp://' + program.host + ':3002');
     console.log('Requester connected to port 3002');
     const requester_object = {
-      action: 'find',
-      service: { name: options.service || 'youpi' }
+      method: 'find',
+      params: {
+        service: { name: options.service || 'youpi' }
+      }
     };
     requester.send(JSON.stringify(requester_object));
     requester.on('message', (message) => {
@@ -66,8 +68,12 @@ function doRegister(options) {
     pusher.connect('tcp://'+ program.host +':3001');
     console.log('Pusher connected to port 3001');
     const register_object = {
-      action: 'register',
-      service
+      id: "client",
+      jsonrpc: "2.0",
+      method: 'register',
+      params: {
+        service
+      }
     }
     console.log('Trying to register: ', service);
     pusher.send(JSON.stringify(register_object));
