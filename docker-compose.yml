@@ -10,9 +10,9 @@ test:
   build: .
   volumes:
     - ./output:/registry/output
-  command: npm test
+  command: bash -c "chmod 777 /registry/output && npm test"
 coverage:
   build: .
   volumes:
     - ./coverage:/registry/coverage
-  command: npm run coverage
+  command: bash -c "chmod 777 /registry/coverage && npm run coverage"
