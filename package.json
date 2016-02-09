@@ -24,6 +24,7 @@
   "author": "LeReunionais",
   "license": "ISC",
   "dependencies": {
+    "bunyan": "^1.5.1",
     "commander": "^2.9.0",
     "express": "^4.13.3",
     "jade": "^1.11.0",
