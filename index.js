@@ -3,26 +3,34 @@ var http_app = require('./lib/interface/http.js')
   , publisher = require('./lib/interface/publisher.js')
   , responder = require('./lib/interface/responder.js');
 
+var log = require('bunyan').createLogger({name:"registry"});
+
 var HTTP_PORT = 3000;
 http_app.listen(HTTP_PORT, () => {
-  console.log(`HTTP listening on http://xxxx:${HTTP_PORT}`);
+  log.info(`HTTP listening on http://xxxx:${HTTP_PORT}`);
 });
 
 var ZMQ_PULL_PORT = 3001;
 puller.bind('tcp', ZMQ_PULL_PORT, () => {
-  console.log(`Pulling on tcp://xxxx:${ZMQ_PULL_PORT}`);
+  log.info(`Pulling on tcp://xxxx:${ZMQ_PULL_PORT}`);
 });
 
 var RESPONDER_PORT = 3002;
 responder.bind('tcp', RESPONDER_PORT, () => {
-  console.log(`Responding on tcp://xxxx:${RESPONDER_PORT}`);
+  log.info(`Responding on tcp://xxxx:${RESPONDER_PORT}`);
 });
 
 var PUBLISHER_PORT = 3003;
 publisher.bind('tcp', PUBLISHER_PORT, () => {
-  console.log(`Publishing on tcp://xxxx:${PUBLISHER_PORT}`);
+  log.info(`Publishing on tcp://xxxx:${PUBLISHER_PORT}`);
 });
 
-responder.on('service not found', (service_name) => {
+responder.on(responder.SERVICE_NOT_FOUND, (service_name) => {
+  log.info('Service not found: ', service_name, ' | Send publication to find this service');
   publisher.whois(service_name);
+});
+
+puller.on('NEW_SERVICE', (service_name) => {
+  log.info('New service registered: ', service_name, ' | Alerting responder of this new discovery.');
+  responder.emit(service_name + '_found');
 });
