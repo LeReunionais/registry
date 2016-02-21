@@ -1,5 +1,32 @@
 var registry = require('../lib/registry.js');
 
+describe('invalidate', () => {
+  beforeEach( () => {
+    registry.clear();
+  })
+	it('should remove service from registry if it exists', ()=> {
+		registry.register({
+			name: "name",
+			hostname: "localhost",
+			port: 3000,
+			protocol: "youpi"
+		});
+		registry.registry().should.have.length(1)
+		registry.invalidate("name");
+		registry.registry().should.have.length(0)
+	})
+	it('should not remove service from registry if it does not exist', ()=> {
+		registry.register({
+			name: "name",
+			hostname: "localhost",
+			port: 3000,
+			protocol: "youpi"
+		});
+		registry.registry().should.have.length(1)
+		registry.invalidate("other name");
+		registry.registry().should.have.length(1)
+	})
+});
 describe('register', () => {
   beforeEach( () => {
     registry.clear();
