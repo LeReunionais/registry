@@ -13,9 +13,10 @@ EXPOSE 3001
 EXPOSE 3002
 EXPOSE 3003
 
-COPY . /registry
 WORKDIR /registry
-
+ADD package.json /registry/package.json
 RUN npm install
+
+ADD . /registry
 
 CMD npm start
