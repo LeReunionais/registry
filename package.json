@@ -28,6 +28,7 @@
     "commander": "^2.9.0",
     "express": "^4.13.3",
     "jade": "^1.11.0",
+    "jsonrpc-lite": "^1.1.1",
     "zmq": "^2.14.0"
   },
   "devDependencies": {
